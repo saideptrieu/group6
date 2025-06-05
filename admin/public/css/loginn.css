@@ -1,0 +1,52 @@
+body {
+    font-size: 14px;
+    font-family: arial;
+    line-height: 23px;
+    background: #0292fe;
+}
+
+#wp-form-login {
+    width: 265px;
+    background: #fdfdfd;
+    border-radius: 3px;
+    padding: 30px 20px 20px 20px;
+    margin: 150px auto;
+    text-align: center;
+}
+
+#title {
+    font-size: 20px;
+    padding: 0 0 15px;
+}
+
+#form-login #username,
+#form-login #password,
+#form-login #email {
+    display: block;
+    padding: 10px 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    background: #f7f7f7;
+    border: none;
+}
+
+p.error {
+    font-size: 13px;
+    color: #e25959;
+}
+
+#form-login #btn-login {
+    display: block;
+    width: 100%;
+    background: #029ef3;
+    border: none;
+    color: #fff;
+    padding: 10px 0;
+    margin: 15px 0 10px;
+    cursor: pointer;
+}
+
+#lost-pass {
+    color: #67a0b7;
+    text-decoration: underline;
+}

@@ -1,0 +1,104 @@
+===========================================================
+    GIẢI THÍCH LUỒNG CHẠY CỦA CHỨC NĂNG GIỎ HÀNG
+===========================================================
+
+1. THÊM SẢN PHẨM VÀO GIỎ HÀNG (ĐÃ CẢI TIẾN)
+------------------------------
+   a. Người dùng nhấn "Thêm vào giỏ hàng" trên trang sản phẩm
+   b. Request được gửi đến: ?mod=cart&action=add&id={id_sản_phẩm}
+   c. Hàm addAction() trong modules/cart/controllers/indexController.php được gọi
+   d. Controller gọi hàm add_cart(id, qty) từ modules/cart/models/indexModel.php
+   e. Mô hình add_cart() thực hiện:
+      - Lấy thông tin sản phẩm từ cơ sở dữ liệu thông qua get_product_by_id()
+      - Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+      - Nếu đã tồn tại, tăng số lượng
+      - Nếu chưa, thêm sản phẩm vào giỏ hàng với thông tin từ cơ sở dữ liệu
+      - Cập nhật tổng số lượng và tổng tiền thông qua update_info_cart()
+   f. Thêm thông báo thành công vào session: $_SESSION['cart_message'] = "Sản phẩm đã được thêm vào giỏ hàng!"
+   g. Redirect người dùng về trang trước đó (nhờ lưu HTTP_REFERER) thay vì luôn chuyển đến trang giỏ hàng
+   h. Hiển thị thông báo thành công trên trang mà không làm gián đoạn trải nghiệm mua sắm
+
+2. HIỂN THỊ GIỎ HÀNG
+--------------------
+   a. Người dùng truy cập trang giỏ hàng: ?mod=cart
+   b. Hàm indexAction() trong modules/cart/controllers/indexController.php được gọi
+   c. Controller lấy dữ liệu từ session thông qua get_cart_items(), get_num_order_cart(), get_total_cart()
+   d. Controller truyền dữ liệu sang view: modules/cart/views/indexView.php
+   e. View hiển thị:
+      - Kiểm tra có sản phẩm nào trong giỏ hàng không
+      - Nếu có, hiển thị bảng danh sách sản phẩm với thông tin chi tiết
+      - Nếu không, hiển thị thông báo "Giỏ hàng trống"
+
+3. CẬP NHẬT SỐ LƯỢNG SẢN PHẨM TRỰC TIẾP (AJAX)
+----------------------------------------------
+   a. Người dùng thay đổi số lượng sản phẩm (nhập trực tiếp hoặc bấm nút +/-)
+   b. JavaScript bắt sự kiện thay đổi và gọi hàm updateSubTotal(id)
+   c. Hàm updateSubTotal() thực hiện:
+      - Tính lại thành tiền cho sản phẩm: số lượng mới x giá
+      - Cập nhật hiển thị thành tiền trên giao diện
+      - Gọi updateCartAjax(id, qty) để cập nhật dữ liệu vào session
+   d. Hàm updateCartAjax() gửi request Ajax đến: ?mod=cart&action=ajaxUpdate
+   e. Hàm ajaxUpdateAction() trong controller được gọi:
+      - Cập nhật số lượng sản phẩm trong session thông qua update_cart(id, qty)
+      - Trả về dữ liệu JSON với thông tin giỏ hàng mới
+   f. JavaScript nhận phản hồi và:
+      - Cập nhật tổng giá hiển thị
+      - Cập nhật số lượng hiển thị trong header trang web
+      - Cập nhật thành tiền của sản phẩm
+
+4. CẬP NHẬT GIỎ HÀNG THÔNG THƯỜNG
+--------------------------------
+   a. Người dùng thay đổi số lượng sản phẩm và nhấn "Cập nhật giỏ hàng"
+   b. Form gửi request đến: ?mod=cart&action=update
+   c. Hàm updateAction() trong controller được gọi
+   d. Controller lặp qua mỗi sản phẩm và cập nhật số lượng thông qua update_cart(id, qty)
+   e. Redirect người dùng trở lại trang giỏ hàng với thông tin đã được cập nhật
+
+5. XÓA SẢN PHẨM KHỎI GIỎ HÀNG 
+----------------------------
+   a. Người dùng nhấn vào biểu tượng thùng rác bên cạnh sản phẩm
+   b. Request được gửi đến: ?mod=cart&action=delete&id={id_sản_phẩm}
+   c. Hàm deleteAction() trong controller được gọi
+   d. Controller gọi hàm delete_cart(id) để xóa sản phẩm khỏi session
+   e. Thêm thông báo vào session: $_SESSION['cart_message'] = "Đã xóa sản phẩm khỏi giỏ hàng!"
+   f. Nếu đang ở trang giỏ hàng, redirect lại trang giỏ hàng; nếu không, quay lại trang trước
+   g. Hiển thị thông báo xóa thành công
+
+6. XÓA TOÀN BỘ GIỎ HÀNG
+----------------------
+   a. Người dùng nhấn vào "Xóa giỏ hàng"
+   b. Request được gửi đến: ?mod=cart&action=destroy
+   c. Hàm destroyAction() trong controller được gọi
+   d. Controller gọi hàm destroy_cart() để xóa toàn bộ giỏ hàng khỏi session
+   e. Thêm thông báo vào session: $_SESSION['cart_message'] = "Đã xóa toàn bộ giỏ hàng!"
+   f. Redirect người dùng trở lại trang giỏ hàng (sẽ hiển thị giỏ hàng trống)
+   g. Hiển thị thông báo xóa thành công
+
+7. MUA NGAY
+----------
+   a. Người dùng nhấn "Mua ngay" trên trang sản phẩm
+   b. Request được gửi đến: ?mod=cart&action=buyNow&id={id_sản_phẩm}
+   c. Hàm buyNowAction() trong controller được gọi
+   d. Controller:
+      - Xóa giỏ hàng hiện tại (để chỉ có sản phẩm mua ngay)
+      - Thêm sản phẩm vào giỏ hàng thông qua add_cart(id, qty)
+      - Thêm thông báo vào session: $_SESSION['cart_message'] = "Sản phẩm đã được thêm vào giỏ hàng và chuyển đến thanh toán!"
+      - Redirect người dùng đến trang thanh toán
+   e. Hiển thị thông báo thành công trên trang thanh toán
+
+8. THANH TOÁN
+------------
+   a. Người dùng nhấn "Thanh toán" từ trang giỏ hàng
+   b. Request được gửi đến: ?mod=cart&action=checkout
+   c. Hàm checkoutAction() trong controller được gọi
+   d. Controller lấy dữ liệu giỏ hàng hiện tại và truyền sang view
+   e. View hiển thị form nhập thông tin khách hàng và danh sách sản phẩm mua
+
+9. HIỂN THỊ THÔNG BÁO GIỎ HÀNG
+------------
+   a. Sau khi thực hiện bất kỳ thay đổi nào với giỏ hàng (thêm, xóa, cập nhật)
+   b. Thêm thông báo vào $_SESSION['cart_message'] trong controller
+   c. Layout/header.php kiểm tra sự tồn tại của $_SESSION['cart_message']
+   d. Nếu có, hiển thị thông báo nổi (popup) ở góc trên bên phải màn hình
+   e. Thông báo tự động biến mất sau 3 giây hoặc khi người dùng nhấn nút đóng (×)
+   f. Xóa thông báo khỏi session sau khi hiển thị để không hiển thị lại khi tải lại trang
