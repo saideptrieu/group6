@@ -2,33 +2,7 @@
 
 function construct()
 {
-    //    echo "DÙng chung, load đầu tiên";
     load_model('index');
-}
-
-function listPostAction()
-{
-    load_view('listPost');
-}
-
-function addPageAction()
-{
-    load_view('addPage');
-}
-
-function listPageAction()
-{
-    load_view('listPage');
-}
-
-function addPostAction()
-{
-    load_view('addPost');
-}
-
-function listCatAction()
-{
-    load_view('listCat');
 }
 
 function listProductAction()
@@ -203,39 +177,128 @@ function toggleFeaturedAction()
     redirect("?mod=products&action=listProduct");
 }
 
-function listCustomerAction()
+function listCatAction()
 {
-    load_view('listCustomer');
+    $search = isset($_GET['s']) ? $_GET['s'] : '';
+    $data = [
+        'categories' => get_categories($search),
+        'total_categories' => count_categories(),
+        'search' => $search
+    ];
+    load_view('listCat', $data);
 }
 
-function listOrderAction()
+function addCatAction()
 {
-    load_view('listOrder');
+    global $error;
+    $error = [];
+
+    if (isset($_POST['btn-submit'])) {
+        // Validate category title
+        if (empty($_POST['cat_title'])) {
+            $error['cat_title'] = "Không được để trống tên danh mục";
+        } else {
+            $cat_title = trim($_POST['cat_title']);
+            if (strlen($cat_title) < 2) {
+                $error['cat_title'] = "Tên danh mục phải có ít nhất 2 ký tự";
+            } elseif (strlen($cat_title) > 100) {
+                $error['cat_title'] = "Tên danh mục không được quá 100 ký tự";
+            } elseif (category_title_exists($cat_title)) {
+                $error['cat_title'] = "Tên danh mục đã tồn tại";
+            }
+        }
+
+        // If no errors, add category
+        if (empty($error)) {
+            $data = [
+                'cat_title' => $cat_title
+            ];
+
+            if (add_category($data)) {
+                redirect("?mod=products&action=listCat");
+            } else {
+                $error['general'] = "Có lỗi xảy ra khi thêm danh mục";
+            }
+        }
+    }
+
+    load_view('addCat');
 }
 
-function menuAction()
+function editCatAction()
 {
-    load_view('menu');
+    global $error;
+    $error = [];
+
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    if (!$id) {
+        redirect("?mod=products&action=listCat");
+    }
+
+    $category = get_category_by_id($id);
+    if (!$category) {
+        redirect("?mod=products&action=listCat");
+    }
+
+    if (isset($_POST['btn-update'])) {
+        // Validate category title
+        if (empty($_POST['cat_title'])) {
+            $error['cat_title'] = "Không được để trống tên danh mục";
+        } else {
+            $cat_title = trim($_POST['cat_title']);
+            if (strlen($cat_title) < 2) {
+                $error['cat_title'] = "Tên danh mục phải có ít nhất 2 ký tự";
+            } elseif (strlen($cat_title) > 100) {
+                $error['cat_title'] = "Tên danh mục không được quá 100 ký tự";
+            } elseif (category_title_exists($cat_title, $id)) {
+                $error['cat_title'] = "Tên danh mục đã tồn tại";
+            }
+        }
+
+        // If no errors, update category
+        if (empty($error)) {
+            $data = [
+                'cat_title' => $cat_title
+            ];
+
+            if (update_category($id, $data)) {
+                redirect("?mod=products&action=listCat");
+            } else {
+                $error['general'] = "Có lỗi xảy ra khi cập nhật danh mục";
+            }
+        }
+    }
+
+    $data = [
+        'category' => $category
+    ];
+    load_view('editCat', $data);
 }
 
-function addSliderAction()
+function deleteCatAction()
 {
-    load_view('addSlider');
-}
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    if (!$id) {
+        redirect("?mod=products&action=listCat");
+    }
 
-function listSliderAction()
-{
-    load_view('listSlider');
-}
+    // Check if category exists
+    $category = get_category_by_id($id);
+    if (!$category) {
+        redirect("?mod=products&action=listCat");
+    }
 
-function addWidgetAction()
-{
-    load_view('addWidget');
-}
+    // Check if category has products
+    $product_count = count_products_by_cat($id);
+    if ($product_count > 0) {
+        // Redirect with error message
+        redirect("?mod=products&action=listCat&error=has_products");
+    }
 
-function listWidgetAction()
-{
-    load_view('listWidget');
+    // Delete category
+    if (delete_category($id)) {
+        redirect("?mod=products&action=listCat&success=deleted");
+    } else {
+        redirect("?mod=products&action=listCat&error=delete_failed");
+    }
 }
-
-function updateAction() {}

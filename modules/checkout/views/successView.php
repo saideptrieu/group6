@@ -13,11 +13,11 @@ get_header();
                         <div class="success-content">
                             <h4>Cảm ơn bạn đã đặt hàng!</h4>
                             <p>Đơn hàng của bạn đã được tiếp nhận và đang trong quá trình xử lý.</p>
-                            <p>Mã đơn hàng: <strong>#<?= $order_code ?? '' ?></strong></p>
+                            <p>Mã đơn hàng: <strong>#<?= $order_id ?? '' ?></strong></p>
                             <p>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất để xác nhận đơn hàng.</p>
                             <div class="action">
                                 <a href="?mod=product" class="btn btn-success">Tiếp tục mua sắm</a>
-                                <a href="?mod=account&action=order" class="btn btn-secondary">Xem đơn hàng</a>
+                                <a href="?mod=checkout&action=listOrder" class="btn btn-secondary">Xem đơn hàng</a>
                             </div>
                         </div>
                     </div>

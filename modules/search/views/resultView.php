@@ -116,7 +116,7 @@ if (!empty($result)) {
     echo "<h3 class='search-result-title'>Kết quả tìm kiếm cho từ khóa: <strong>" . htmlspecialchars($keyword) . "</strong></h3>";
     echo '<div class="product-grid">';
     foreach ($result as $item) {
-        echo '<div class="product-card">';
+        echo '<div class="product-card" onclick="location.href=\'?mod=product&action=detail&id=' . $item['id'] . '\'">';
         echo '<img src="' . $item['product_thumb'] . '" alt="' . htmlspecialchars($item['product_title']) . '">';
         echo '<h3>' . nl2br(htmlspecialchars_decode($item['product_title'])) . '</h3>';
 

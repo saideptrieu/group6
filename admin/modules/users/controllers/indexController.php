@@ -3,7 +3,6 @@ function construct()
 {
   load_model('index');
   load('lib', 'validation');
-  load('lib', 'email');
 }
 
 function indexAction()
@@ -64,64 +63,7 @@ function logoutAction()
   redirect("?mod=users&action=login");
 }
 
-function updateAction()
+function resetAction()
 {
-  if (isset($_POST['btn-update'])) {
-    // show_array($_POST);
-    $error = array();
-
-    #Kiểm tra fullname
-    if (empty($_POST['fullname'])) {
-      $error['fullname'] = "Không được để trống tên hiển thị";
-    } else {
-      if (!is_fullname($_POST['fullname'])) {
-        $error['fullname'] = "Tên hiển thị không đúng định dạng";
-      } else {
-        $fullname = $_POST['fullname'];
-      }
-    }
-
-    #Kiểm tra phone_number
-    if (empty($_POST['phone_number'])) {
-      $error['phone_number'] = "Lỗi";
-    } else {
-      if (!is_phone_number($_POST['phone_number'])) {
-        $error['phone_number'] = "Số điện thoại không đúng định dạng";
-      } else {
-        $phone_number = $_POST['phone_number'];
-      }
-    }
-
-    #Kiểm tra address
-    if (empty($_POST['address'])) {
-      $error['address'] = "Lỗi";
-    } else {
-      if (!is_address($_POST['address'])) {
-        $error['address'] = "Địa chỉ không đúng định dạng";
-      } else {
-        $address = $_POST['address'];
-      }
-    }
-
-    $fullname = $_POST['fullname'];
-    $phone_number = $_POST['phone_number'];
-    $address = $_POST['address'];
-    
-    #update
-
-    if (empty($error)) {
-      $data = array(
-        'fullname' => $fullname,
-        'phone_number' => $phone_number,
-        'address' => $address
-      );
-      show_array($data);
-      update_user_login(user_login(), $data);
-    }
-  }
-  // show_array($_SESSION);
-  $info_user = get_user_by_username(user_login());
-  // show_array($info_user);
-  $data['info_user'] = $info_user;
-  load_view('update', $data);
+  load_view('reset');
 }

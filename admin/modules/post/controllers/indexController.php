@@ -9,63 +9,61 @@ function construct()
 function listPostAction()
 {
     $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+    $sort = isset($_GET['sort']) && in_array($_GET['sort'], ['asc', 'desc']) ? $_GET['sort'] : 'desc';
 
     if (!empty($keyword)) {
         $list_posts = search_posts_by_keyword($keyword);
     } else {
-        $list_posts = get_list_posts();
+        $list_posts = get_list_posts($sort);
     }
 
-    $categories = get_list_categories(); // load toàn bộ danh mục
+    $categories = get_list_categories();
     $data = [
         'list_posts' => $list_posts,
         'categories' => $categories,
         'keyword' => $keyword,
+        'sort' => $sort,
     ];
     load_view('listPost', $data);
-}
-
-
-
-function addPageAction()
-{
-    load_view('addPage');
-}
-
-function listPageAction()
-{
-    load_view('listPage');
 }
 
 function addPostAction()
 {
     if (isset($_POST['btn-submit'])) {
         $title = $_POST['title'];
-        $slug = $_POST['slug'];
         $desc = $_POST['desc'];
         $category_id = !empty($_POST['category_id']) ? $_POST['category_id'] : null;
-        $image = 'no-image.png'; // mặc định
 
-        // Handle file upload
+        $image = 'no-image.png'; // ảnh mặc định nếu không upload
+
         if (!empty($_FILES['file']['name'])) {
             $upload_dir = 'public/images/';
             $upload_file = $upload_dir . basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $upload_file)) {
                 $image = $_FILES['file']['name'];
             }
+
+            $target_file = $upload_dir . basename($_FILES['file']['name']);
+            $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (in_array($file_type, $allowed_types)) {
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
+                    $image = $_FILES['file']['name'];
+                }
+            }
         }
 
         $data = [
             'title' => $title,
-            'slug' => $slug,
             'description' => $desc,
-            'content' => '', // nếu có trường content riêng thì lấy thêm
+            'content' => '', // nếu bạn muốn dùng trường này
             'image' => $image,
             'created_at' => date('Y-m-d H:i:s'),
             'category_id' => $category_id,
         ];
 
-        add_post($data); // Gọi model để insert
+        add_post($data); // model insert dữ liệu vào DB
 
         redirect("?mod=post&action=listPost");
     }
@@ -73,57 +71,46 @@ function addPostAction()
     load_view('addPost');
 }
 
-function listCatAction()
+function editPostAction()
 {
-    load_view('listCat');
-}
+    $id = $_GET['id'];
+    $post = get_post_by_id($id);
+    $categories = get_all_categories();
 
-function listProductAction()
-{
-    load_view('listProduct');
-}
+    if (isset($_POST['btn_update'])) {
+        $title = $_POST['title'];
+        $desc = $_POST['desc'];
+        $category_id = !empty($_POST['category_id']) ? $_POST['category_id'] : null;
 
-function addProductAction()
-{
-    load_view('addProduct');
-}
+        $image = $post['image']; // mặc định giữ ảnh cũ
 
-function listCustomerAction()
-{
-    load_view('listCustomer');
-}
+        if (!empty($_FILES['file']['name'])) {
+            $upload_dir = 'public/images/';
+            $target_file = $upload_dir . basename($_FILES['file']['name']);
+            $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
 
-function listOrderAction()
-{
-    load_view('listOrder');
-}
+            if (in_array($file_type, $allowed_types)) {
+                if (move_uploaded_file($_FILES['file']['tmp_name'], $target_file)) {
+                    $image = $_FILES['file']['name'];
+                }
+            }
+        }
 
-function menuAction()
-{
-    load_view('menu');
-}
+        $data = [
+            'title' => $title,
+            'description' => $desc,
+            'content' => '', // hoặc bạn có thể lấy $_POST['content']
+            'image' => $image,
+            'category_id' => $category_id,
+        ];
 
-function addSliderAction()
-{
-    load_view('addSlider');
-}
+        update_post($id, $data); // model update
+        redirect("?mod=post&action=listPost");
+    }
 
-function listSliderAction()
-{
-    load_view('listSlider');
+    load_view('editPost', compact('post', 'categories'));
 }
-
-function addWidgetAction()
-{
-    load_view('addWidget');
-}
-
-function listWidgetAction()
-{
-    load_view('listWidget');
-}
-
-function updateAction() {}
 
 function deletePostAction()
 {
@@ -134,24 +121,26 @@ function deletePostAction()
     redirect("?mod=post&action=listPost");
 }
 
-function editPostAction()
+function listCatAction()
 {
-    $id = $_GET['id'];
-    $post = get_post_by_id($id);
-    $categories = get_all_categories();
+    $category_id = isset($_GET['id']) ? $_GET['id'] : '';
+    $categories = get_list_categories();
+    $list_posts = [];
+    $current_category = $category_id;
 
-    if (isset($_POST['btn_update'])) {
-        $data = [
-            'title' => $_POST['title'],
-            'content' => $_POST['content'],
-            'category_id' => isset($_POST['category_id']) ? $_POST['category_id'] : null
-        ];
-        update_post($id, $data);
-        header("Location: ?mod=post&action=listPost");
-        exit();
+    if ($category_id === '') {
+        $list_posts = get_posts_without_category();
+        $current_category = '';
+    } else {
+        $category_id = (int)$category_id;
+        $list_posts = get_posts_by_category($category_id);
     }
 
+    $data = [
+        'list_posts' => $list_posts,
+        'categories' => $categories,
+        'current_category' => $current_category,
+    ];
 
-
-    load_view('editPost', compact('post', 'categories'));
+    load_view('listCat', $data);
 }

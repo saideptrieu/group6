@@ -1,11 +1,15 @@
 <?php
 get_header();
 ?>
-
+<style>
+    #content {
+        margin: 0 auto;
+        border: none;
+    }
+</style>
 <div id="main-content-wp" class="add-cat-page">
     <div class="wrap clearfix">
-        <?php get_sidebar(); ?>
-        <div id="content" class="fl-right">
+        <div id="content" class="">
             <div class="section" id="title-page">
                 <div class="clearfix">
                     <h3 id="index" class="fl-left">Cập nhật Slide</h3>
@@ -28,11 +32,11 @@ get_header();
                             <label for="image">Hình ảnh</label>
                             <input type="file" name="image" id="image" class="form-control-file">
                             <?php echo form_error('image'); ?>
-                            <?php if(!empty($slide['image_url'])): ?>
-                            <div class="image-preview" style="margin-top: 10px;">
-                                <img src="<?php echo $slide['image_url']; ?>" alt="<?php echo $slide['title']; ?>" style="max-width: 200px;">
-                                <p>Hình ảnh hiện tại. Chọn file mới nếu muốn thay đổi.</p>
-                            </div>
+                            <?php if (!empty($slide['image_url'])): ?>
+                                <div class="image-preview" style="margin-top: 10px;">
+                                    <img src="<?php echo $slide['image_url']; ?>" alt="<?php echo $slide['title']; ?>" style="max-width: 200px;">
+                                    <p>Hình ảnh hiện tại. Chọn file mới nếu muốn thay đổi.</p>
+                                </div>
                             <?php endif; ?>
                         </div>
                         <div class="form-group" hidden>
@@ -56,4 +60,4 @@ get_header();
 
 <?php
 get_footer();
-?> 
+?>

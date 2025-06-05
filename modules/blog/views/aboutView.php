@@ -10,7 +10,6 @@
         margin: 0;
     }
 
-    /* Căn giữa toàn trang */
     #main-content-wp .wp-inner {
         max-width: 1200px;
         margin: 0 auto;
@@ -20,8 +19,6 @@
         padding: 30px 15px;
     }
 
-
-    /* Nội dung chính */
     .main-content {
         width: 70%;
         background: #fff;
@@ -37,17 +34,12 @@
 
     .section-title {
         color: #2c3e50;
+        font-size: 28px;
+        margin-bottom: 20px;
     }
 
     .red {
-        color: blue;
-    }
-
-    .create-date {
-        font-size: 14px;
-        color: #999;
-        margin-bottom: 25px;
-        display: block;
+        color: #007bff;
     }
 
     .highlight-description {
@@ -70,31 +62,161 @@
         margin-bottom: 18px;
     }
 
-    .content h2 {
+    h3.section-title {
+        margin-bottom: 0;
+    }
+
+    .content h2,
+    .content h3 {
         font-size: 22px;
         color: #007bff;
         margin-top: 30px;
-        margin-bottom: 15px;
+        /* margin-bottom: 15px; */
     }
 
-    .content ul {
-        padding-left: 20px;
-        margin-bottom: 20px;
-    }
-
-    .content ul li {
-        margin-bottom: 10px;
-        list-style: disc;
+    .thumb {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
     }
 
     .thumb img {
-        max-width: 100%;
+        max-width: 50%;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         margin: 20px 0;
     }
 
+    /* Features Grid */
+    .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .feature-item {
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    .feature-item h3 {
+        font-size: 18px;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .feature-item p {
+        font-size: 15px;
+        color: #555;
+    }
+
+    /* Timeline */
+    .timeline {
+        margin: 40px 0;
+        padding-left: 20px;
+        border-left: 3px solid #007bff;
+        position: relative;
+    }
+
+    .timeline-item {
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .timeline-item::before {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: #007bff;
+        border-radius: 50%;
+        position: absolute;
+        left: -7px;
+        top: 5px;
+    }
+
+    .timeline-year {
+        font-weight: 700;
+        color: #007bff;
+        margin-bottom: 5px;
+    }
+
+    .timeline-description {
+        font-size: 15px;
+        color: #555;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .testimonial-item {
+        background: #f9f9f9;
+        border-left: 5px solid #007bff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .testimonial-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .testimonial-content {
+        font-style: italic;
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        color: #333;
+        text-align: right;
+        font-size: 15px;
+    }
+
     /* Responsive */
+    @media (min-width: 768px) {
+        .features-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .testimonials {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 992px) {
+        .features-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .testimonials {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
     @media (max-width: 768px) {
         #main-content-wp .wp-inner {
             flex-direction: column;
@@ -110,10 +232,8 @@
 <div id="main-content-wp" class="clearfix detail-page">
     <div class="wp-inner">
 
-        <!-- Sidebar -->
         <?php get_sidebar(); ?>
 
-        <!-- Main content -->
         <div class="main-content">
             <div class="section" id="detail-blog">
                 <div class="section-head">
@@ -130,42 +250,29 @@
                     <div class="content post-content">
                         <p>Pickleball là môn thể thao đang phát triển mạnh mẽ trên toàn thế giới, kết hợp giữa tennis, bóng bàn và cầu lông. Với luật chơi đơn giản, dễ tiếp cận cho mọi lứa tuổi và trình độ, Pickleball nhanh chóng trở thành lựa chọn lý tưởng cho những ai muốn vận động, giao lưu và rèn luyện sức khỏe.</p>
 
-                        <p>Tại Pickleball.vn, chúng tôi mang đến cho bạn:</p>
-
-                        <p>📰 <strong>Tin tức &amp; Sự kiện:</strong> Cập nhật nhanh chóng các giải đấu, hoạt động cộng đồng và xu hướng mới nhất trong giới Pickleball trong nước và quốc tế.</p>
-
-                        <p>🎓 <strong>Hướng dẫn chơi:</strong> Từ cơ bản đến nâng cao – giúp người mới bắt đầu dễ dàng nắm bắt kỹ thuật, luật chơi, chiến thuật thi đấu.</p>
-
-                        <p>🛒 <strong>Cửa hàng dụng cụ:</strong> Cung cấp vợt, bóng, lưới và phụ kiện chính hãng, chất lượng cao, phù hợp với mọi nhu cầu và ngân sách.</p>
-
-                        <p>👫 <strong>Cộng đồng &amp; Kết nối:</strong> Diễn đàn, nhóm chơi, và các buổi offline giao lưu giữa những người có chung đam mê.</p>
-
-                        <p>📹 <strong>Video &amp; Bài học:</strong> Nội dung trực quan giúp bạn học hỏi kỹ thuật, chiến thuật từ các vận động viên chuyên nghiệp.</p>
-
-                        <p>Chúng tôi tin rằng Pickleball không chỉ là một môn thể thao – mà còn là cầu nối của sự gắn kết, niềm vui và phong cách sống năng động. Dù bạn là người mới hay vận động viên dày dạn, hãy đồng hành cùng chúng tôi để phát triển cộng đồng Pickleball ngày càng lớn mạnh!</p>
+                        <h2>Bạn nhận được gì từ Pickleball.vn?</h2>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon">📰</div>
+                                <h3>Tin tức &amp; Sự kiện</h3>
+                                <p>Cập nhật nhanh chóng các giải đấu, hoạt động cộng đồng và xu hướng mới nhất trong giới Pickleball trong nước và quốc tế.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🎓</div>
+                                <h3>Hướng dẫn chơi</h3>
+                                <p>Từ cơ bản đến nâng cao – giúp người mới bắt đầu dễ dàng nắm bắt kỹ thuật, luật chơi, chiến thuật thi đấu.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🛒</div>
+                                <h3>Cửa hàng dụng cụ</h3>
+                                <p>Cung cấp vợt, bóng, lưới và phụ kiện chính hãng, chất lượng cao, phù hợp với mọi nhu cầu và ngân sách.</p>
+                            </div>
+                        </div>
 
                         <h3>Pickleball.vn – Bắt đầu đam mê, nâng tầm kỹ năng!</h3>
                     </div>
                 </div>
 
-                <div class="section" id="social-wp">
-                    <div class="section-detail">
-                        <div class="fb-like"
-                            data-href="http://yourwebsite.com/gioi-thieu"
-                            data-layout="button_count"
-                            data-action="like"
-                            data-size="small"
-                            data-show-faces="true"
-                            data-share="true">
-                        </div>
-
-                        <div class="fb-comments"
-                            data-href="http://yourwebsite.com/gioi-thieu"
-                            data-numposts="5"
-                            data-width="100%">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 

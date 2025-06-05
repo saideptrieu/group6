@@ -7,9 +7,6 @@ require CONFIGPATH . DIRECTORY_SEPARATOR . 'database.php';
 // Include file config/config
 require CONFIGPATH . DIRECTORY_SEPARATOR . 'config.php';
 
-// Include file config/email
-require CONFIGPATH . DIRECTORY_SEPARATOR . 'email.php';
-
 // Include file config/autoload
 require CONFIGPATH . DIRECTORY_SEPARATOR . 'autoload.php';
 

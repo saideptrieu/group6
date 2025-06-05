@@ -1,9 +1,13 @@
 <?php get_header(); ?>
-
+<style>
+    #content {
+        margin: 0 auto;
+        border: none;
+    }
+</style>
 <div id="main-content-wp" class="list-post-page">
     <div class="wrap clearfix">
-        <?php get_sidebar(); ?>
-        <div id="content" class="fl-right">
+        <div id="content" class="">
             <div class="section" id="title-page">
                 <div class="clearfix">
                     <h3 id="index" class="fl-left">Danh sách bài viết</h3>
@@ -19,11 +23,19 @@
                             <input type="hidden" name="action" value="listPost">
                             <input type="text" name="keyword" placeholder="Tìm kiếm bài viết..." value="<?= isset($_GET['keyword']) ? $_GET['keyword'] : '' ?>">
                             <button type="submit">Tìm kiếm</button>
-                        </form>
-                        <?php if (!empty($keyword)): ?>
-                            <p>Kết quả tìm kiếm cho: <strong><?= htmlspecialchars($keyword) ?></strong></p>
-                        <?php endif; ?>
-
+                            <?php if (!empty($keyword)): ?>
+                                <p>Kết quả tìm kiếm cho: <strong><?= htmlspecialchars($keyword) ?></strong></p>
+                            <?php endif; ?>
+                            <div class="sort-box fl-right">
+                                <form method="GET" action="">
+                                    <input type="hidden" name="mod" value="post">
+                                    <input type="hidden" name="action" value="listPost">
+                                    <select name="sort" onchange="this.form.submit()">
+                                        <option value="desc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'desc') ? 'selected' : '' ?>>Mới nhất</option>
+                                        <option value="asc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'asc') ? 'selected' : '' ?>>Cũ nhất</option>
+                                    </select>
+                                </form>
+                            </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table list-table-wp">
@@ -44,7 +56,7 @@
                                     $t = 0;
                                     foreach ($list_posts as $post) :
                                         $t++;
-                                        ?>
+                                ?>
                                         <tr>
                                             <td><input type="checkbox" name="checkItem" class="checkItem"></td>
                                             <td><span class="tbody-text"><?= $t ?></span></td>
@@ -64,36 +76,15 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
-                                    <tr><td colspan="7"><strong>Không có bài viết nào.</strong></td></tr>
+                                    <tr>
+                                        <td colspan="7"><strong>Không có bài viết nào.</strong></td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
-                            <!-- <tfoot>
-                                <tr>
-                                    <td><input type="checkbox" name="checkAll" id="checkAll"></td>
-                                    <td><span class="tfoot-text">STT</span></td>
-                                    <td><span class="tfoot-text">Tiêu đề</span></td>
-                                    <td><span class="tfoot-text">Danh mục</span></td>
-                                    <td><span class="tfoot-text">Trạng thái</span></td>
-                                    <td><span class="tfoot-text">Người tạo</span></td>
-                                    <td><span class="tfoot-text">Thời gian</span></td>
-                                </tr>
-                            </tfoot> -->
                         </table>
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="section" id="paging-wp">
-                <div class="section-detail clearfix">
-                    <ul id="list-paging" class="fl-right">
-                        <li><a href="" title="">&laquo;</a></li>
-                        <li><a href="" title="">1</a></li>
-                        <li><a href="" title="">2</a></li>
-                        <li><a href="" title="">3</a></li>
-                        <li><a href="" title="">&raquo;</a></li>
-                    </ul>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>

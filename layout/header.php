@@ -38,6 +38,9 @@
                                 <li>
                                     <a href="?mod=blog&action=about" title="">Giới thiệu</a>
                                 </li>
+                                <li>
+                                    <a href="?mod=checkout&action=listOrder" title="">Đơn hàng</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

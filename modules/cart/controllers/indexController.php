@@ -114,8 +114,8 @@ function ajaxUpdateAction()
                 // Lấy thông tin giỏ hàng mới
                 $cart_items = get_cart_items();
                 $response['cart_info'] = array(
-                    'total_quantity' => get_num_order_cart(),
-                    'total_price' => get_total_cart(),
+                    'quantity' => get_num_order_cart(),
+                    'sub_total' => get_total_cart(),
                     'formatted_total' => number_format(get_total_cart(), 0, ',', '.') . 'đ'
                 );
 
@@ -210,3 +210,4 @@ function redirect($url)
     header("Location: {$url}");
     exit;
 }
+

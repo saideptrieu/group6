@@ -1,11 +1,15 @@
 <?php
 get_header();
 ?>
-
+<style>
+    #content {
+        margin: 0 auto;
+        border: none;
+    }
+</style>
 <div id="main-content-wp" class="list-post-page">
     <div class="wrap clearfix">
-        <?php get_sidebar(); ?>
-        <div id="content" class="fl-right">
+        <div id="content" class="">
             <div class="section" id="title-page">
                 <div class="clearfix">
                     <h3 id="index" class="fl-left">Danh sách slides</h3>
@@ -15,7 +19,7 @@ get_header();
             <div class="section" id="detail-page">
                 <div class="section-detail">
                     <div class="search-box">
-                        <form action="" method="get">  
+                        <form action="" method="get">
                             <input type="hidden" name="mod" value="slides">
                             <input type="hidden" name="action" value="index">
                             <input type="text" name="keyword" placeholder="Tìm kiếm" value="<?php echo isset($keyword) ? $keyword : ''; ?>">
@@ -87,4 +91,4 @@ get_header();
 
 <?php
 get_footer();
-?> 
+?>

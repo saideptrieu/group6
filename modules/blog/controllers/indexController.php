@@ -33,7 +33,7 @@ function show_list_blogAction()
     $data = array(
         'list_post' => $list_post,
         'page' => $page,
-        'total_pages' => $total_pages
+        'total_pages' => $total_pages,
     );
 
     load_view('index', $data);
@@ -44,22 +44,36 @@ function indexAction()
     show_list_blogAction(); // Gọi lại action kia
 }
 
+
 function detailAction()
 {
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-    if ($id > 0) {
-        $post = get_post_by_id($id);
-
-        if (!empty($post)) {
-            $data['post'] = $post;
-            load_view('detail', $data);
-        } else {
-            echo "Bài viết không tồn tại.";
-        }
-    } else {
+    if ($id <= 0) {
         echo "Thiếu ID bài viết.";
+        return;
     }
+
+    $post = get_post_by_id($id);
+
+    if (empty($post)) {
+        echo "Bài viết không tồn tại.";
+        return;
+    }
+
+    // Lấy tên danh mục nếu có
+    $category_name = 'Không rõ';
+    if (!empty($post['category_id'])) {
+        $category_name = get_category_name($post['category_id']);
+    }
+
+    // Gửi dữ liệu qua view
+    $data = [
+        'post' => $post,
+        'category_name' => $category_name
+    ];
+
+    load_view('detail', $data);
 }
 
 

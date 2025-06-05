@@ -54,19 +54,19 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="" title="">Bán hàng</a>
+                            <a href="?mod=order&action=list" title="">Bán hàng</a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="?mod=page&action=listOrder" title="">Danh sách đơn hàng</a>
+                                    <a href="?mod=order&action=list" title="">Danh sách đơn hàng</a>
                                 </li>
                                 <li>
-                                    <a href="?mod=page&action=listCustomer" title="">Danh sách khách hàng</a>
+                                    <a href="?mod=customer&action=list_customer" title="">Danh sách khách hàng</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li>
-                            <a href="" title="">Slide</a>
+                            <a href="?mod=slides" title="">Slide</a>
                             <ul class="sub-menu">
                                 <li>
                                     <a href="?mod=slides&action=add" title="" class="nav-link">Thêm mới</a>
@@ -86,7 +86,7 @@
                             <h3 id="account" class="fl-right"><?php if (!empty(user_login())) echo user_login(); ?></h3>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="?mod=users&action=update" title="Thông tin cá nhân">Thông tin tài khoản</a></li>
+                            <li><a href="http://localhost/unitop.vn/pickleballshop/admin/?" title="Thông tin cá nhân">Thông tin tài khoản</a></li>
                             <li><a href="?mod=users&action=logout" title="Thoát">Thoát</a></li>
                         </ul>
                     </div>

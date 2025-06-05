@@ -36,16 +36,6 @@
                     </li>
                 </ul>
             </div>
-            <div class="block" id="newfeed">
-                <h3 class="title">Bảng tin</h3>
-                <p class="desc">Đăng ký với chúng tôi để nhận được thông tin ưu đãi sớm nhất</p>
-                <div id="form-reg">
-                    <form method="POST" action="">
-                        <input type="email" name="email" id="email" placeholder="Nhập email tại đây">
-                        <button type="submit" id="sm-reg">Đăng ký</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
     <div id="foot-bot">
@@ -54,9 +44,10 @@
         </div>
     </div>
 </div>
-<div id="btn-top"><img src="public/images/icon-to-top.png" alt=""/></div>
+<div id="btn-top"><img src="public/images/icon-to-top.png" alt="" /></div>
 <div id="fb-root"></div>
-<script>(function (d, s, id) {
+<script>
+    (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id))
             return;
@@ -67,4 +58,5 @@
     }(document, 'script', 'facebook-jssdk'));
 </script>
 </body>
+
 </html>

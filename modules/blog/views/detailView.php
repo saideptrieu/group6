@@ -20,29 +20,41 @@
         padding: 30px 15px;
     }
 
-    
+
     /* Nội dung chính */
     .main-content {
         width: 70%;
         background: #fff;
         padding: 30px;
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         transition: box-shadow 0.3s ease;
     }
 
     .main-content:hover {
-        box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
     }
 
     .section-title {
         color: #2c3e50;
-        
+    }
+
+    .category {
+        margin-bottom: 10px;
+        border-bottom: 0.5px solid #999;
+        width:fit-content;
+    }
+
+    h1.section-title {
+        color: #007bff;
+        font-size: 30px;
+        font-weight: bold;
     }
 
     .create-date {
         font-size: 14px;
         color: #999;
+        margin-top: 10px;
         margin-bottom: 25px;
         display: block;
     }
@@ -87,7 +99,7 @@
     .thumb img {
         max-width: 100%;
         border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         margin: 20px 0;
     }
 
@@ -97,7 +109,8 @@
             flex-direction: column;
         }
 
-        .sidebar, .main-content {
+        .sidebar,
+        .main-content {
             width: 100%;
         }
     }
@@ -107,11 +120,18 @@
     <div class="wp-inner">
 
         <!-- Sidebar -->
-            <?php get_sidebar(); ?>
+        <?php get_sidebar(); ?>
 
         <!-- Main content -->
         <div class="main-content">
             <div class="section" id="detail-blog">
+
+                <div class="category">
+                    <p><strong>Danh mục:<strong>
+                                <i><?php echo $category_name; ?></i>
+                    </p>
+                </div>
+
                 <div class="section-head">
                     <h1 class="section-title"><?= $post['title'] ?></h1>
                     <span class="create-date"><?= date('d/m/Y', strtotime($post['created_at'])) ?></span>
@@ -136,17 +156,17 @@
                 <div class="section" id="social-wp">
                     <div class="section-detail">
                         <div class="fb-like"
-                             data-href="<?= 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>"
-                             data-layout="button_count"
-                             data-action="like"
-                             data-size="small"
-                             data-show-faces="true"
-                             data-share="true">
+                            data-href="<?= 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>"
+                            data-layout="button_count"
+                            data-action="like"
+                            data-size="small"
+                            data-show-faces="true"
+                            data-share="true">
                         </div>
                         <div class="fb-comments"
-                             data-href="<?= 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>"
-                             data-numposts="5"
-                             data-width="100%">
+                            data-href="<?= 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>"
+                            data-numposts="5"
+                            data-width="100%">
                         </div>
                     </div>
                 </div>

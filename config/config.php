@@ -11,7 +11,7 @@
  * 
  */
 
-$config['base_url'] = "http://localhost/pickleballshop/";
+$config['base_url'] = "http://localhost/unitop.vn/pickleballshop/";
 
 
 $config['default_module'] = 'home';

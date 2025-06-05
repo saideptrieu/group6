@@ -19,6 +19,7 @@
                     <h3 class="section-title">Blog</h3>
                 </div>
                 <div class="section-detail">
+                    
                     <ul class="list-item">
                         <?php foreach ($list_post as $post): ?>
                             <li class="clearfix">

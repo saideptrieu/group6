@@ -176,10 +176,10 @@ get_header();
                             totalElement.innerText = response.cart_info.formatted_total;
 
                             // Cập nhật số lượng hiển thị trong header
-                            if (response.cart_info.total_quantity !== undefined) {
+                            if (response.cart_info.quantity !== undefined) {
                                 var headerNumElements = document.querySelectorAll('#num');
                                 headerNumElements.forEach(function (element) {
-                                    element.innerText = response.cart_info.total_quantity;
+                                    element.innerText = response.cart_info.quantity;
                                 });
                             }
                         }
