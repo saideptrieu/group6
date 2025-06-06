@@ -20,7 +20,7 @@ if (!function_exists('add_customer_db')) {
     function add_customer_db($data)
     {
         if (!empty($data['fullname'])) {
-            db_insert("tbl_customers", $data);
+            db_insert("tbl_orders", $data);
         }
     }
 }

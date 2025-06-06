@@ -41,7 +41,6 @@
                         <table class="table list-table-wp">
                             <thead>
                                 <tr>
-                                    <td><input type="checkbox" name="checkAll" id="checkAll"></td>
                                     <td><span class="thead-text">STT</span></td>
                                     <td><span class="thead-text">Tiêu đề</span></td>
                                     <td><span class="thead-text">Danh mục</span></td>
@@ -58,7 +57,6 @@
                                         $t++;
                                 ?>
                                         <tr>
-                                            <td><input type="checkbox" name="checkItem" class="checkItem"></td>
                                             <td><span class="tbody-text"><?= $t ?></span></td>
                                             <td class="clearfix">
                                                 <div class="tb-title fl-left">

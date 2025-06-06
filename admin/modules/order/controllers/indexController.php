@@ -18,7 +18,7 @@ function listAction()
     load_view('orderView', compact('order_items'));
 }
 
-function add_itemAction()
+function add_itemAction() //Thêm sản phẩm
 {
     if (isset($_POST['btn_add'])) {
         $order_id   = (int)$_POST['order_id'];
@@ -35,7 +35,7 @@ function add_itemAction()
             ];
             db_insert('tbl_order_items', $data);
             update_order_summary($order_id); // Nếu bạn có bảng tổng
-            redirect('?mod=order&controller=index&action=list');
+            redirect('?mod=order&action=list');
         }
     }
     load_view('addOrder'); // Gọi form phía trên

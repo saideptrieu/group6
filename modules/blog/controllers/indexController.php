@@ -1,14 +1,9 @@
 <?php
 
-
-// Nạp model
-require_once MODULESPATH . DIRECTORY_SEPARATOR . 'blog' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'indexModel.php';
-
 // Hàm khởi tạo (bắt buộc để tránh lỗi construct)
 function construct()
 {
-    // Có thể load model nếu chưa require ở trên
-    // load_model('index');
+    load_model('index');
 }
 
 // Hàm xử lý action show_list_blog (đúng theo URL: ?mod=blog&controller=index&action=show_list_blog)
@@ -45,7 +40,7 @@ function indexAction()
 }
 
 
-function detailAction()
+function detailAction()//Chi tiết bài viết
 {
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -54,7 +49,7 @@ function detailAction()
         return;
     }
 
-    $post = get_post_by_id($id);
+    $post = get_post_by_id($id);//lấy bài viết theo id thông qua hàm trong model
 
     if (empty($post)) {
         echo "Bài viết không tồn tại.";
@@ -74,35 +69,6 @@ function detailAction()
     ];
 
     load_view('detail', $data);
-}
-
-
-
-function add_postAction()
-{
-    if (isset($_POST['btn_submit'])) {
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $content = $_POST['content'];
-        $image = '';
-
-        // Xử lý ảnh
-        if (!empty($_FILES['image']['name'])) {
-            $upload_dir = 'public/images/';
-            $image_name = time() . '-' . basename($_FILES['image']['name']);
-            $upload_path = $upload_dir . $image_name;
-
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
-                $image = $image_name;
-            }
-        }
-
-        // Gọi model để lưu
-        insert_post($title, $description, $content, $image);
-        echo "Thêm bài viết thành công!";
-    }
-
-    load_view('add'); // Hiển thị form
 }
 
 function policyAction()

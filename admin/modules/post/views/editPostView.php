@@ -24,7 +24,6 @@
                         <label>Hình ảnh</label>
                         <div id="uploadFile">
                             <input type="file" name="file" id="upload-thumb">
-
                         </div>
                         <label for="category_id">Danh mục</label>
                         <select name="category_id" id="category_id" class="form-control">

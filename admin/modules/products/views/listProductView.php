@@ -14,6 +14,22 @@
                     <a href="?mod=products&action=addProduct" title="" id="add-new" class="fl-left">Thêm mới</a>
                 </div>
             </div>
+
+            <!-- Search Section -->
+            <div class="section" id="search-wp">
+                <div class="section-detail">
+                    <form method="GET">
+                        <input type="hidden" name="mod" value="products">
+                        <input type="hidden" name="action" value="listProduct">
+                        <input type="text" name="s" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>" placeholder="Tìm kiếm sản phẩm...">
+                        <input type="submit" value="Tìm kiếm">
+                        <?php if (!empty($search)): ?>
+                            <a href="?mod=products&action=listCat" class="btn btn-secondary">Xóa tìm kiếm</a>
+                        <?php endif; ?>
+                    </form>
+                </div>
+            </div>
+
             <div class="section" id="detail-page">
                 <div class="section-detail">
 

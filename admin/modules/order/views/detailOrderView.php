@@ -77,9 +77,7 @@
         <button onclick="printInvoice()">
             <i class="fa fa-print"></i> In hóa đơn
         </button>
-        <button onclick="savePDF()">
-            <i class="fa fa-file-pdf"></i> Tải PDF
-        </button>
+        
     </div>
 </div>
 

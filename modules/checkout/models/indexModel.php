@@ -42,20 +42,29 @@ function get_product_info($product_id)
     return $result;
 }
 
+// function get_order_summary($order_id)
+// {
+//     $items = db_fetch_array("SELECT quantity, sub_total FROM tbl_order_items WHERE order_id = {$order_id}");
+
+//     $quantity = 0;
+//     $sub_total = 0;
+
+//     foreach ($items as $item) {
+//         $quantity += $item['quantity'];
+//         $sub_total += $item['sub_total'];
+//     }
+
+//     return [
+//         'quantity' => $quantity,
+//         'sub_total' => $sub_total,
+//     ];
+// }
+
 function get_order_summary($order_id)
 {
-    $items = db_fetch_array("SELECT quantity, sub_total FROM tbl_order_items WHERE order_id = {$order_id}");
-
-    $quantity = 0;
-    $sub_total = 0;
-
-    foreach ($items as $item) {
-        $quantity += $item['quantity'];
-        $sub_total += $item['sub_total'];
-    }
-
+    $order = db_fetch_row("SELECT quantity, sub_total FROM tbl_orders WHERE id = {$order_id}");
     return [
-        'quantity' => $quantity,
-        'sub_total' => $sub_total,
+        'quantity' => $order['quantity'] ?? 0,
+        'sub_total' => $order['sub_total'] ?? 0,
     ];
 }

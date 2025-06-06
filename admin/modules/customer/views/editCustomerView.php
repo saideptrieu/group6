@@ -51,11 +51,6 @@
         <input type="hidden" name="id" value="<?= $customer['id'] ?>">
 
         <div class="form-group">
-            <label>Mã khách hàng (code):</label>
-            <input type="text" name="code" value="<?= $customer['code'] ?>">
-        </div>
-
-        <div class="form-group">
             <label>Họ và tên:</label>
             <input type="text" name="fullname" value="<?= $customer['fullname'] ?>" required>
         </div>

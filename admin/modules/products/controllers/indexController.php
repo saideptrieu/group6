@@ -10,10 +10,13 @@ function listProductAction()
     $search = isset($_GET['s']) ? $_GET['s'] : '';
     $data = [
         'products' => list_products($search),
-        'total_products' => count_products()
+        'total_products' => count_products(),
+        'search' => $search 
     ];
     load_view('listProduct', $data);
 }
+
+
 
 function addProductAction()
 {

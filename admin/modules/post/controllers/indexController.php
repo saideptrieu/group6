@@ -38,11 +38,6 @@ function addPostAction()
 
         if (!empty($_FILES['file']['name'])) {
             $upload_dir = 'public/images/';
-            $upload_file = $upload_dir . basename($_FILES['file']['name']);
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $upload_file)) {
-                $image = $_FILES['file']['name'];
-            }
-
             $target_file = $upload_dir . basename($_FILES['file']['name']);
             $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
@@ -80,6 +75,7 @@ function editPostAction()
     if (isset($_POST['btn_update'])) {
         $title = $_POST['title'];
         $desc = $_POST['desc'];
+        $content = $_POST['content'];
         $category_id = !empty($_POST['category_id']) ? $_POST['category_id'] : null;
 
         $image = $post['image']; // mặc định giữ ảnh cũ
@@ -100,7 +96,7 @@ function editPostAction()
         $data = [
             'title' => $title,
             'description' => $desc,
-            'content' => '', // hoặc bạn có thể lấy $_POST['content']
+            'content' => $content, // hoặc bạn có thể lấy $_POST['content']
             'image' => $image,
             'category_id' => $category_id,
         ];

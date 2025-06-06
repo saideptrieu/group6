@@ -23,7 +23,6 @@
                         <label>Hình ảnh</label>
                         <div id="uploadFile">
                             <input type="file" name="file" id="upload-thumb">
-                            <img src="public/images/img-thumb.png" id="img-preview" style="max-width: 200px; margin-top: 10px;">
                         </div>
                         <label>Danh mục cha</label>
                         <select name="category_id">
@@ -41,16 +40,17 @@
 </div>
 
 <script>
-document.getElementById('upload-thumb').addEventListener('change', function(e){
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt){
-            document.getElementById('img-preview').src = evt.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
+    document.getElementById('upload-thumb').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                document.getElementById('img-preview').src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
+
 
 <?php get_footer(); ?>
